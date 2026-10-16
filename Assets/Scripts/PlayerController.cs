@@ -27,10 +27,10 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IShipActions
     }
 
 	// TODO: Activa (Enable) l'inputActions
-	private void OnEnable() => inputActions.Enable();
+	private void OnEnable() => inputActions.Ship.Enable();
 
 	// TODO: Desactiva (Disable) l'inputActions
-	private void OnDisable() => inputActions.Disable();
+	private void OnDisable() => inputActions.Ship.Disable();
 
 	public void OnFire(InputAction.CallbackContext context)
 	{
