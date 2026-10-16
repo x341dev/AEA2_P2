@@ -46,13 +46,12 @@ public class BulletPool : MonoBehaviour
 	//     retorna-la.
 	public Bullet GetBullet(Vector3 position, Quaternion rotation)
     {
-        Bullet buller = (pool.Count > 0) ? pool.Pop() : CreateBullet();
-        Bullet bullet = pool.Pop();
+    }
+        Bullet bullet = (pool.Count > 0) ? pool.Pop() : CreateBullet();
         bullet.transform.SetPositionAndRotation(position, rotation);
         bullet.gameObject.SetActive(true);
         bullet.Init();
         return bullet;
-    } 
 
     // Mètode cridat per la bullet quan termina el temps o impacta amb un Asteroid.
     public void ReturnBullet(Bullet bullet)
