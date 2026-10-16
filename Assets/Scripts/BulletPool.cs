@@ -22,7 +22,7 @@ public class BulletPool : MonoBehaviour
 			return;
 		}
 		Instance = this;
-		DontDestroyOnLoad(gameObject);
+		// DontDestroyOnLoad(gameObject);
 
 		for (int i = 0; i < initialSize; i++) pool.Push(CreateBullet());
     }
@@ -44,7 +44,15 @@ public class BulletPool : MonoBehaviour
 	//     Activa-la
 	//     Inizialitza amb Init(). (important col·locar-la i rotar-la 1r i després iniciar)
 	//     retorna-la.
-	public Bullet GetBullet(Vector3 position, Quaternion rotation) => (pool.Count > 0) ? pool.Pop() : CreateBullet();
+	public Bullet GetBullet(Vector3 position, Quaternion rotation)
+    {
+        Bullet buller = (pool.Count > 0) ? pool.Pop() : CreateBullet();
+        Bullet bullet = pool.Pop();
+        bullet.transform.SetPositionAndRotation(position, rotation);
+        bullet.gameObject.SetActive(true);
+        bullet.Init();
+        return bullet;
+    } 
 
     // Mètode cridat per la bullet quan termina el temps o impacta amb un Asteroid.
     public void ReturnBullet(Bullet bullet)
