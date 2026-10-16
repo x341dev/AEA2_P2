@@ -23,7 +23,7 @@ public class AsteroidPool : MonoBehaviour
 			return;
 		}
 		Instance = this;
-		DontDestroyOnLoad(gameObject);
+		// sDontDestroyOnLoad(gameObject);
 
 		for (int i = 0; i < initialSize; i++) pool.Push(CreateAsteroid());
 	}
@@ -42,7 +42,16 @@ public class AsteroidPool : MonoBehaviour
 	//   si l'stack no esta buit (pool.Count > 0), treu un Asteroid Pop().
 	//   si no en queda cap instancia un CreateAsteroid().
 	//   col·loca en la posició correcta, activa'l i retorna'l
-	public Asteroid GetAsteroid(Vector3 position) => pool.Count > 0 ? pool.Pop() : CreateAsteroid();
+	public Asteroid GetAsteroid(Vector3 position) 
+    {
+        Asteroid asteroid = (pool.Count > 0) ? pool.Pop() : CreateAsteroid();
+        if (asteroid != null)
+        {
+            asteroid.transform.position = position;
+            asteroid.gameObject.SetActive(true);
+        }
+        return asteroid;
+    }
 
     public void ReturnAsteroid(Asteroid asteroid)
     {
