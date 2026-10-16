@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour
         // Distancia al centre: transform.position.magnitude
         // Si és més gran que despawnDistance, cridem AsteroidPool.Instance.ReturnAsteroid(this)
 
-        if (transform.position.magnitude < despawnDistance) AsteroidPool.Instance.ReturnAsteroid(this);
+        if (transform.position.magnitude > despawnDistance) AsteroidPool.Instance.ReturnAsteroid(this);
     }
 
     public void TakeDamage(int amount)
@@ -77,9 +77,11 @@ public class Asteroid : MonoBehaviour
         // Tip: if si l'asteroid ja està innactiu no fagis res
         //      (if (!gameObject.activeSelf) return;)
 
+        if (!gameObject.activeSelf) return;
+
         if (other.CompareTag("Player")) {
-            if (!gameObject.activeSelf) return;
             GameManager.Instance.LoseLife(data.damage);
+            AsteroidPool.Instance.ReturnAsteroid(this);
         }
     }
 }
