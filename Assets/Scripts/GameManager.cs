@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 		Instance = this;
-		DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
 
 	}
 
@@ -59,13 +59,17 @@ public class GameManager : MonoBehaviour
 		// TODO: Resta amount a lives i actualitza la UI.
 		//       si lives < 0 GameOver().
 		//       Extra: si el joc ja ha terminat no facis res
+        if (IsGameOver) return;
 
-		if (score >= lives)
+        lives -= amount;
+
+        UpdateUI();
+
+        if (lives <= 0)
         {
             GameOver();
             return;
         }
-        lives -= amount;
     }
 
     private void GameOver()
@@ -75,7 +79,11 @@ public class GameManager : MonoBehaviour
 		//     Fes aparèixer el panell de GameOver
 		//     Congela el joc Time.timeScale = 0
 		IsGameOver = true;
-        gameObject.SetActive(true);
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+        
         Time.timeScale = 0f;
     }
 
